@@ -47,7 +47,7 @@ class CardController extends Controller
             return new CardResource(Card::find($id));
         }
         return response()->json([
-            'message' => "card with ($id) not found"
+            'message' => "card with {$id} not found"
         ]);
     }
 
@@ -70,7 +70,7 @@ class CardController extends Controller
             return response(status: 204);
         }
         return response()->json([
-            'message' => "post with id ($id) not found"
+            'message' => "post with id {$id} not found"
         ]);
     }
 }
