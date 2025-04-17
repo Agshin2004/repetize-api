@@ -1,16 +1,9 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\V1\AuthController;
-use App\Http\Middleware\V1\RedirectIfAuthenticated;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\CardController;
 use App\Http\Controllers\Api\V1\DeskController;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+use App\Http\Controllers\Api\V1\AuthController;
 
 Route::group(['prefix' => 'v1'], function () {
     Route::apiResource('desk', DeskController::class);
