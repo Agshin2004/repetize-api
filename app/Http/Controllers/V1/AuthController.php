@@ -84,7 +84,22 @@ class AuthController extends Controller
     // User logout
     public function logout()
     {
-        auth('api')->logout();
+        auth('api')->logout(); // Invalidate token
         return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function someMethod(Request $request)
+    {
+        try {
+            // Check if user is authenticated
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or not provided'], 401);
+        }
+
+        // Token is valid, $user is the authenticated user
+        return response()->json([
+            'message' => 'Valid token'
+        ]);
     }
 }

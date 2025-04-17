@@ -20,6 +20,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::post('/register', [AuthController::class, 'register'])->middleware('isAuthenticated');
         Route::post('/login', [AuthController::class, 'login'])->middleware('isAuthenticated');
+        Route::get('/checkToken', [AuthController::class, 'someMethod']);
 
         // * auth:api - middleware to ensure only authenticatd users (with valid jwt) can access those routes
         // * auth - middleware; api - argument passed to it
