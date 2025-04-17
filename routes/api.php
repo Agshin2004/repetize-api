@@ -18,12 +18,15 @@ Route::group(['prefix' => 'v1'], function () {
 
     // Auth routes
     Route::group(['prefix' => 'auth'], function () {
-        Route::get('/me', [AuthController::class, 'me']);
-        Route::get('/logout', [AuthController::class, 'logout']);
-        Route::get('/refresh', [AuthController::class, 'refresh']);
+        Route::post('/register', [AuthController::class, 'register'])->middleware('isAuthenticated');
+        Route::post('/login', [AuthController::class, 'login'])->middleware('isAuthenticated');
 
-        Route::post('/register', [AuthController::class, 'register'])->middleware(RedirectIfAuthenticated::class);
-        Route::post('/login', [AuthController::class, 'login'])->middleware(RedirectIfAuthenticated::class);
-        ;
+        // * auth:api - middleware to ensure only authenticatd users (with valid jwt) can access those routes
+        // * auth - middleware; api - argument passed to it
+        Route::group(['middleware' => ['auth:api']], function () {
+            Route::get('/me', [AuthController::class, 'me']);
+            Route::get('/logout', [AuthController::class, 'logout']);
+            Route::get('/refresh', [AuthController::class, 'refresh']);
+        });
     });
 });
